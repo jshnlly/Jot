@@ -11,6 +11,8 @@ struct ContentView: View {
     @State var title = ""
     @State var note = "Jot something..."
     @State var clearPosition = false
+    @State private var showArrow = false
+    @State private var keyboardHeight: CGFloat = 0
     
     var body: some View {
         ZStack {
@@ -34,14 +36,19 @@ struct ContentView: View {
                 }
                 
                 HStack(spacing: 12){
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Button(action: {
+                        if showArrow {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+                    }, label: {
                         Image(systemName: "arrow.down")
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.brand)
                             .frame(width: 60, height: 48)
                             .background(Color.accent)
                             .cornerRadius(8)
-                            .opacity(1)
+                            .opacity(showArrow ? 1 : 0)
+                            .animation(.easeInOut)
                     })
                     .disabled(clearPosition == true)
                     
@@ -52,7 +59,8 @@ struct ContentView: View {
                             .frame(width: 60, height: 48)
                             .background(Color.accent)
                             .cornerRadius(8)
-                            .opacity(1)
+                            .opacity(showArrow ? 0 : 1)
+                            .animation(.easeInOut)
                     })
                     .disabled(clearPosition == true)
                     
@@ -102,6 +110,20 @@ struct ContentView: View {
                     .disabled(clearPosition == true)
                 }
                 .padding(16)
+            }
+            .onAppear {
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
+                    guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                        return
+                    }
+                    showArrow = true
+                    self.keyboardHeight = keyboardFrame.height
+                }
+                
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (notification) in
+                    
+                    showArrow.toggle()
+                }
             }
                 
                 VStack {
