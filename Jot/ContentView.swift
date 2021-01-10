@@ -12,7 +12,11 @@ struct ContentView: View {
     @State var note = "Jot something..."
     @State var clearPosition = false
     @State private var showArrow = false
-    @State private var keyboardHeight: CGFloat = 0
+    @State private var keyboardSize: CGFloat = 0
+    @State var showSettings = false
+    @State var titleView = true
+    @State var frameSize = false
+    @State var placeholderString = "Jot something..."
     
     var body: some View {
         ZStack {
@@ -24,13 +28,19 @@ struct ContentView: View {
                                 .padding(.leading, 16)
                                 .padding(.top, 16)
                                 .font(.system(size: 24, weight: .semibold))
+                                .opacity(titleView ? 1 : 0)
                             
                             TextEditor(text: $note)
                                 .padding(.leading, 12)
                                 .padding(.top, 12)
                                 .font(.system(size: 16, weight: .regular))
-                                .foregroundColor(.placeholder)
-                                .frame(height: 300)
+                                .foregroundColor(note != placeholderString ? .textColor : .placeholder)
+                                .frame(height: frameSize ? 750 : 300 )
+                                .onTapGesture {
+                                            if note == placeholderString {
+                                              self.note = ""
+                                            }
+                                          }
                         }
                     }
                 }
@@ -52,7 +62,9 @@ struct ContentView: View {
                     })
                     .disabled(clearPosition == true)
                     
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Button(action: {
+                        showSettings.toggle()
+                    }, label: {
                         Image(systemName: "gear")
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.brand)
@@ -96,6 +108,8 @@ struct ContentView: View {
                         } else {
                          note = ""
                         }
+                        
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }, label: {
                         HStack {
                             Image(systemName: "arrow.counterclockwise")
@@ -117,14 +131,28 @@ struct ContentView: View {
                         return
                     }
                     showArrow = true
-                    self.keyboardHeight = keyboardFrame.height
+                    self.keyboardSize = keyboardFrame.height
                 }
                 
                 NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (notification) in
                     
+                    frameSize = true
                     showArrow.toggle()
                 }
             }
+            .animation(.easeInOut)
+            
+            Rectangle()
+                .foregroundColor(.overlay)
+                .opacity(clearPosition || showSettings ? 0.6 : 0)
+                .edgesIgnoringSafeArea(.all)
+                .animation(.easeInOut)
+                .onTapGesture {
+                    if showSettings {
+                    showSettings.toggle()
+                    }
+                }
+            
                 
                 VStack {
                     VStack {
@@ -160,11 +188,15 @@ struct ContentView: View {
                     .padding()
                     .frame(width: 351, height: 220, alignment: .center)
                     .background(Color.sheet)
-                    .cornerRadius(8)
-                    .offset(y: clearPosition ? 0 : -300)
+                    .cornerRadius(10)
+                    .offset(y: clearPosition ? 24 : -300)
                     .animation(.easeInOut)
                     
                     Spacer()
+                    
+                    SettingsView(titleView: $titleView, showSettings: $showSettings)
+                        .offset(y: showSettings ? 0 : 300)
+                        .animation(.easeInOut)
             }
         }
     }
@@ -182,4 +214,9 @@ extension Color {
     static let error = Color("error")
     static let sheet = Color("sheet")
     static let accent = Color("accent")
+    static let overlay = Color("overlay")
+    static let textColor = Color("textColor")
 }
+
+let screen = UIScreen.main.bounds
+
