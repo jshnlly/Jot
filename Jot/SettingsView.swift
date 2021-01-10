@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State var darkMode = false
+    @AppStorage("darkMode") private var darkMode = false
     @Binding var titleView: Bool
     @Binding var showSettings: Bool
     @State var showingAbout = false
+
     
     var body: some View {
         VStack {
@@ -37,10 +38,10 @@ struct SettingsView: View {
                     .cornerRadius(8)
                     
                     HStack {
-                        Image(systemName: darkMode ? "sun.min" : "moon")
+                        Image(systemName: "moon")
                             .padding(.trailing, 8)
                             .font(.system(size: 22, weight: .medium)).foregroundColor(.brand)
-                            .animation(.easeInOut)
+                            .animation(.spring(response: 0.3, dampingFraction: 0.7))
                         Toggle(isOn: $darkMode){
                             Text("Dark Mode")
                         }
@@ -79,7 +80,8 @@ struct SettingsView: View {
                         .foregroundColor(.textColor)
                     })
                     .sheet(isPresented: $showingAbout, content: {
-                        AboutView()
+                        AboutView(aboutPresented: $showingAbout)
+                            .preferredColorScheme(darkMode ? .dark : .light)
                     })
                     
                 }
@@ -91,6 +93,7 @@ struct SettingsView: View {
         }
     }
 }
+
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {

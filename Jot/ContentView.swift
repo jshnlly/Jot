@@ -7,8 +7,12 @@
 
 import SwiftUI
 import UserNotifications
+import CoreHaptics
 
 struct ContentView: View {
+    @AppStorage("darkMode") private var darkMode = false
+    @ObservedObject var userSettings = UserSettings()
+    @State private var engine: CHHapticEngine?
     @State var title = ""
     @State var note = "Jot something..."
     @State var clearPosition = false
@@ -20,6 +24,7 @@ struct ContentView: View {
     @State var placeholderString = "Jot something..."
     @State private var sharing = false
     @State var showCopy = false
+    @State var showingAbout = false
     
     var body: some View {
         ZStack {
@@ -31,7 +36,7 @@ struct ContentView: View {
                                 .padding(.leading, 16)
                                 .padding(.top, 16)
                                 .font(.system(size: 24, weight: .semibold))
-                                .opacity(titleView ? 1 : 0)
+                                .opacity(userSettings.titleView ? 1 : 0)
                             
                             TextEditor(text: $note)
                                 .padding(.leading, 12)
@@ -52,6 +57,9 @@ struct ContentView: View {
                     Button(action: {
                         if showArrow {
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            
+                            prepareHaptics()
+                            complexSuccess()
                         }
                     }, label: {
                         Image(systemName: "arrow.down")
@@ -67,6 +75,8 @@ struct ContentView: View {
                     
                     Button(action: {
                         showSettings.toggle()
+                        prepareHaptics()
+                        complexSuccess()
                     }, label: {
                         Image(systemName: "gear")
                             .font(.system(size: 20, weight: .medium))
@@ -84,6 +94,9 @@ struct ContentView: View {
                         let av = UIActivityViewController(activityItems: [ UIPasteboard.general.string ?? "no data"], applicationActivities: nil)
                         
                         UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+                        
+                        prepareHaptics()
+                        complexSuccess()
                     }, label: {
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 20, weight: .medium))
@@ -100,6 +113,8 @@ struct ContentView: View {
                             showCopy.toggle()
                         }
                         UIPasteboard.general.string = note
+                        
+                        simpleSuccess()
                     }, label: {
                         HStack {
                             Image(systemName: "doc.on.doc")
@@ -116,11 +131,16 @@ struct ContentView: View {
                     Button(action: {
                         if note.count > 20 || title.count != 0  {
                             clearPosition.toggle()
+                            
+                            prepareHaptics()
+                            complexSuccess()
                         } else {
                          note = "Jot something..."
+                            simpleSuccess()
                         }
                         
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                       
                     }, label: {
                         HStack {
                             Image(systemName: "arrow.counterclockwise")
@@ -202,22 +222,134 @@ struct ContentView: View {
                     .frame(width: screen.width - 32, height: 220, alignment: .center)
                     .background(Color.sheet)
                     .cornerRadius(10)
-                    .offset(y: clearPosition ? 24 : -300)
-                    .animation(.easeInOut)
+                    .offset(y: clearPosition ? 8 : -300)
+                    .animation(.spring(response: 0.3, dampingFraction: 0.7))
                     
                     Spacer()
                     
-                    SettingsView(titleView: $titleView, showSettings: $showSettings)
+                    VStack {
+                        Spacer()
+                        VStack {
+                            VStack {
+                                HStack {
+                                    Image(systemName: "doc.text")
+                                        .padding(.trailing, 8)
+                                        .font(.system(size: 22, weight: .medium))
+                                        .foregroundColor(.brand)
+                                    Toggle(isOn: $userSettings.titleView) {
+                                        Text("Start Notes with Title")
+                                    }
+                                    .toggleStyle(SwitchToggleStyle(tint: .brand))
+
+                                }
+                                .padding(.leading, 12)
+                                .padding(.trailing, 12)
+                                .padding(.top, 8)
+                                .padding(.bottom, 8)
+                                .background(Color.accent)
+                                .cornerRadius(8)
+                                
+                                HStack {
+                                    Image(systemName: "moon")
+                                        .padding(.trailing, 8)
+                                        .font(.system(size: 22, weight: .medium)).foregroundColor(.brand)
+                                        .animation(.spring(response: 0.3, dampingFraction: 0.7))
+                                    Toggle(isOn: $darkMode){
+                                        Text("Dark Mode")
+                                    }
+                                    .foregroundColor(.textColor)
+                                    .toggleStyle(SwitchToggleStyle(tint: .brand))
+                                }
+                                .padding(.leading, 12)
+                                .padding(.trailing, 12)
+                                .padding(.top, 8)
+                                .padding(.bottom, 8)
+                                .background(Color.accent)
+                                .cornerRadius(10)
+                                
+                                Button(action: {
+                                    showingAbout.toggle()
+                                }, label: {
+                                    HStack {
+                                        Image(systemName: "info.circle")
+                                            .padding(.trailing, 8)
+                                            .font(.system(size: 22, weight: .medium))
+                                            .foregroundColor(.brand)
+
+                                        Text("About Jot")
+                                            .foregroundColor(.textColor)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: 18, weight: .medium))
+                                            .foregroundColor(.gray)
+                                    }
+                                    .padding(.leading, 12)
+                                    .padding(.trailing, 12)
+                                    .padding(.top, 8)
+                                    .padding(.bottom, 8)
+                                    .background(Color.accent)
+                                    .cornerRadius(8)
+                                    .foregroundColor(.textColor)
+                                })
+                                .sheet(isPresented: $showingAbout, content: {
+                                    AboutView(aboutPresented: $showingAbout)
+                                        .preferredColorScheme(darkMode ? .dark : .light)
+                                })
+                                
+                            }
+                            .padding()
+                        }
+                        .background(Color.sheet)
+                        .cornerRadius(10)
+                        .padding()
+                    }
                         .offset(y: showSettings ? 0 : 450)
-                        .animation(.easeInOut)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.7))
                     
             }
             
             CopyAlertView()
                 .offset(y: showCopy ? 0 : -200)
                 .opacity(showCopy ? 1 : 0)
-                .animation(Animation.easeInOut.repeatCount(1, autoreverses: true))
+                .animation(.spring(response: 0.3, dampingFraction: 0.7))
             
+        }
+    }
+    
+    func simpleSuccess() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+    }
+    
+    func prepareHaptics() {
+        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
+
+        do {
+            self.engine = try CHHapticEngine()
+            try engine?.start()
+        } catch {
+            print("There was an error creating the engine: \(error.localizedDescription)")
+        }
+    }
+    
+    func complexSuccess() {
+        // make sure that the device supports haptics
+        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
+        var events = [CHHapticEvent]()
+
+        // create one intense, sharp tap
+        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1)
+        let event = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: 0)
+        events.append(event)
+
+        // convert those events into a pattern and play it immediately
+        do {
+            let pattern = try CHHapticPattern(events: events, parameters: [])
+            let player = try engine?.makePlayer(with: pattern)
+            try player?.start(atTime: 0)
+        } catch {
+            print("Failed to play pattern: \(error.localizedDescription).")
         }
     }
 }
@@ -236,7 +368,9 @@ extension Color {
     static let accent = Color("accent")
     static let overlay = Color("overlay")
     static let textColor = Color("textColor")
+    static let bg = Color("bg")
 }
 
 let screen = UIScreen.main.bounds
+
 

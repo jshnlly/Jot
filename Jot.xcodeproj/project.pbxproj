@@ -14,6 +14,8 @@
 		2625D67F25AA793B00ADF40A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625D67E25AA793B00ADF40A /* SettingsView.swift */; };
 		2625D68225AA818300ADF40A /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625D68125AA818300ADF40A /* AboutView.swift */; };
 		2625D68525AABEB300ADF40A /* CopyAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625D68425AABEB300ADF40A /* CopyAlertView.swift */; };
+		26E67F8625AB52940060B14B /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E67F8525AB52940060B14B /* PrivacyView.swift */; };
+		26E67F9225AB71770060B14B /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E67F9125AB71770060B14B /* UserSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		2625D67E25AA793B00ADF40A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2625D68125AA818300ADF40A /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		2625D68425AABEB300ADF40A /* CopyAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyAlertView.swift; sourceTree = "<group>"; };
+		26E67F8525AB52940060B14B /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		26E67F9125AB71770060B14B /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +64,9 @@
 			children = (
 				2625D66A25AA4C8D00ADF40A /* JotApp.swift */,
 				2625D66C25AA4C8D00ADF40A /* ContentView.swift */,
+				26E67F9125AB71770060B14B /* UserSettings.swift */,
 				2625D68125AA818300ADF40A /* AboutView.swift */,
+				26E67F8525AB52940060B14B /* PrivacyView.swift */,
 				2625D67E25AA793B00ADF40A /* SettingsView.swift */,
 				2625D68425AABEB300ADF40A /* CopyAlertView.swift */,
 				2625D66E25AA4C8D00ADF40A /* Assets.xcassets */,
@@ -151,7 +157,9 @@
 				2625D67F25AA793B00ADF40A /* SettingsView.swift in Sources */,
 				2625D66D25AA4C8D00ADF40A /* ContentView.swift in Sources */,
 				2625D68525AABEB300ADF40A /* CopyAlertView.swift in Sources */,
+				26E67F9225AB71770060B14B /* UserSettings.swift in Sources */,
 				2625D66B25AA4C8D00ADF40A /* JotApp.swift in Sources */,
+				26E67F8625AB52940060B14B /* PrivacyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
