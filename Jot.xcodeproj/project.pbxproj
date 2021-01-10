@@ -13,6 +13,7 @@
 		2625D67225AA4C8D00ADF40A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2625D67125AA4C8D00ADF40A /* Preview Assets.xcassets */; };
 		2625D67F25AA793B00ADF40A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625D67E25AA793B00ADF40A /* SettingsView.swift */; };
 		2625D68225AA818300ADF40A /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625D68125AA818300ADF40A /* AboutView.swift */; };
+		2625D68525AABEB300ADF40A /* CopyAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625D68425AABEB300ADF40A /* CopyAlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		2625D67325AA4C8D00ADF40A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2625D67E25AA793B00ADF40A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2625D68125AA818300ADF40A /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		2625D68425AABEB300ADF40A /* CopyAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyAlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				2625D66C25AA4C8D00ADF40A /* ContentView.swift */,
 				2625D68125AA818300ADF40A /* AboutView.swift */,
 				2625D67E25AA793B00ADF40A /* SettingsView.swift */,
+				2625D68425AABEB300ADF40A /* CopyAlertView.swift */,
 				2625D66E25AA4C8D00ADF40A /* Assets.xcassets */,
 				2625D67325AA4C8D00ADF40A /* Info.plist */,
 				2625D67025AA4C8D00ADF40A /* Preview Content */,
@@ -147,6 +150,7 @@
 				2625D68225AA818300ADF40A /* AboutView.swift in Sources */,
 				2625D67F25AA793B00ADF40A /* SettingsView.swift in Sources */,
 				2625D66D25AA4C8D00ADF40A /* ContentView.swift in Sources */,
+				2625D68525AABEB300ADF40A /* CopyAlertView.swift in Sources */,
 				2625D66B25AA4C8D00ADF40A /* JotApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

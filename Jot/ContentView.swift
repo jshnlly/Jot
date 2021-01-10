@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
     @State var title = ""
@@ -17,6 +18,8 @@ struct ContentView: View {
     @State var titleView = true
     @State var frameSize = false
     @State var placeholderString = "Jot something..."
+    @State private var sharing = false
+    @State var showCopy = false
     
     var body: some View {
         ZStack {
@@ -76,7 +79,12 @@ struct ContentView: View {
                     })
                     .disabled(clearPosition == true)
                     
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Button(action: {
+                        UIPasteboard.general.string = note
+                        let av = UIActivityViewController(activityItems: [ UIPasteboard.general.string ?? "no data"], applicationActivities: nil)
+                        
+                        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+                    }, label: {
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.brand)
@@ -88,6 +96,9 @@ struct ContentView: View {
                     .disabled(clearPosition == true)
                     
                     Button(action: {
+                        withAnimation {
+                            showCopy.toggle()
+                        }
                         UIPasteboard.general.string = note
                     }, label: {
                         HStack {
@@ -106,7 +117,7 @@ struct ContentView: View {
                         if note.count > 20 || title.count != 0  {
                             clearPosition.toggle()
                         } else {
-                         note = ""
+                         note = "Jot something..."
                         }
                         
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -144,12 +155,13 @@ struct ContentView: View {
             
             Rectangle()
                 .foregroundColor(.overlay)
-                .opacity(clearPosition || showSettings ? 0.6 : 0)
+                .opacity(clearPosition || showSettings || showCopy ? 0.6 : 0)
                 .edgesIgnoringSafeArea(.all)
                 .animation(.easeInOut)
                 .onTapGesture {
-                    if showSettings {
-                    showSettings.toggle()
+                    if showSettings || showCopy {
+                    showSettings = false
+                    showCopy = false
                     }
                 }
             
@@ -163,30 +175,31 @@ struct ContentView: View {
                             .foregroundColor(Color(#colorLiteral(red: 0.4862745098, green: 0.4862745098, blue: 0.4862745098, alpha: 1)))
                         Button(action: {
                             title = ""
-                            note = ""
+                            note = "Jot something..."
                             clearPosition.toggle()
                         }, label: {
                             Text("Clear Note")
                                 .font(.system(size: 18, weight: .regular))
                                 .foregroundColor(.error)
-                                .frame(width: 327, height: 44)
+                                .frame(width: screen.width - 64, height: 44)
                                 .background(Color.accent)
                                 .cornerRadius(8)
                         })
                         .padding(.bottom, 8)
                         .padding(.top, 8)
+
                         Button(action: {
                             clearPosition.toggle()
                         }, label: {
                             Text("Cancel")
                                 .font(.system(size: 18, weight: .regular))
-                                .frame(width: 327, height: 44)
+                                .frame(width: screen.width - 64, height: 44)
                                 .background(Color.accent)
                                 .cornerRadius(8)
                         })
                     }
                     .padding()
-                    .frame(width: 351, height: 220, alignment: .center)
+                    .frame(width: screen.width - 32, height: 220, alignment: .center)
                     .background(Color.sheet)
                     .cornerRadius(10)
                     .offset(y: clearPosition ? 24 : -300)
@@ -195,9 +208,16 @@ struct ContentView: View {
                     Spacer()
                     
                     SettingsView(titleView: $titleView, showSettings: $showSettings)
-                        .offset(y: showSettings ? 0 : 300)
+                        .offset(y: showSettings ? 0 : 450)
                         .animation(.easeInOut)
+                    
             }
+            
+            CopyAlertView()
+                .offset(y: showCopy ? 0 : -200)
+                .opacity(showCopy ? 1 : 0)
+                .animation(Animation.easeInOut.repeatCount(1, autoreverses: true))
+            
         }
     }
 }
