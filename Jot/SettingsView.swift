@@ -64,7 +64,7 @@ struct SettingsView: View {
                                 .font(.system(size: 22, weight: .medium))
                                 .foregroundColor(.brand)
 
-                            Text("About Jot")
+                            Text("About Jottie")
                                 .foregroundColor(.textColor)
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -97,6 +97,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(titleView: .constant(true), showSettings: .constant(true)).environmentObject(IconNames())
+        SettingsView(titleView: .constant(true), showSettings: .constant(true))
     }
 }

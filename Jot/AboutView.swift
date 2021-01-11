@@ -13,6 +13,9 @@ struct AboutView: View {
     @Binding var aboutPresented: Bool
     
     var body: some View {
+        
+//        dismiss button
+        
         VStack {
             HStack {
                 Button(action: {
@@ -30,6 +33,8 @@ struct AboutView: View {
             }
             .padding()
             
+//            image area & content
+            
             Image("icon")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -37,11 +42,11 @@ struct AboutView: View {
                 .cornerRadius(30)
                 .padding(.top, 64)
             
-            Text("Jot")
+            Text("Jottie")
                 .font(.system(size: 24, weight: .bold))
                 .foregroundColor(.brand)
             
-            Text("Version 1.0")
+            Text("Version 1.1.4")
                 .padding(.top, 4)
                 .font(.subheadline)
             
@@ -52,6 +57,8 @@ struct AboutView: View {
             Text("© Josh Nelson – joshn.io. All rights reserved.")
                 .font(.subheadline)
                 .foregroundColor(.gray)
+            
+//            bottom actions
             
             VStack {
                 Button(action: {

@@ -121,7 +121,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2625D66225AA4C8D00ADF40A /* Build configuration list for PBXProject "Jot" */;
+			buildConfigurationList = 2625D66225AA4C8D00ADF40A /* Build configuration list for PBXProject "Jottie" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -301,11 +301,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = io.joshn.Jot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -324,18 +324,18 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = io.joshn.Jot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2625D66225AA4C8D00ADF40A /* Build configuration list for PBXProject "Jot" */ = {
+		2625D66225AA4C8D00ADF40A /* Build configuration list for PBXProject "Jottie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2625D67425AA4C8D00ADF40A /* Debug */,
