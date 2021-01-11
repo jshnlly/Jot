@@ -97,6 +97,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(titleView: .constant(true), showSettings: .constant(true))
+        SettingsView(titleView: .constant(true), showSettings: .constant(true)).environmentObject(IconNames())
     }
 }

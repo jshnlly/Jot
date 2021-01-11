@@ -16,6 +16,7 @@
 		2625D68525AABEB300ADF40A /* CopyAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625D68425AABEB300ADF40A /* CopyAlertView.swift */; };
 		26E67F8625AB52940060B14B /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E67F8525AB52940060B14B /* PrivacyView.swift */; };
 		26E67F9225AB71770060B14B /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E67F9125AB71770060B14B /* UserSettings.swift */; };
+		26E67FAC25ABACB90060B14B /* OnboardingHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E67FAB25ABACB90060B14B /* OnboardingHome.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		2625D68425AABEB300ADF40A /* CopyAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyAlertView.swift; sourceTree = "<group>"; };
 		26E67F8525AB52940060B14B /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		26E67F9125AB71770060B14B /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		26E67FAB25ABACB90060B14B /* OnboardingHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHome.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			children = (
 				2625D66A25AA4C8D00ADF40A /* JotApp.swift */,
 				2625D66C25AA4C8D00ADF40A /* ContentView.swift */,
+				26E67FAB25ABACB90060B14B /* OnboardingHome.swift */,
 				26E67F9125AB71770060B14B /* UserSettings.swift */,
 				2625D68125AA818300ADF40A /* AboutView.swift */,
 				26E67F8525AB52940060B14B /* PrivacyView.swift */,
@@ -156,6 +159,7 @@
 				2625D68225AA818300ADF40A /* AboutView.swift in Sources */,
 				2625D67F25AA793B00ADF40A /* SettingsView.swift in Sources */,
 				2625D66D25AA4C8D00ADF40A /* ContentView.swift in Sources */,
+				26E67FAC25ABACB90060B14B /* OnboardingHome.swift in Sources */,
 				2625D68525AABEB300ADF40A /* CopyAlertView.swift in Sources */,
 				26E67F9225AB71770060B14B /* UserSettings.swift in Sources */,
 				2625D66B25AA4C8D00ADF40A /* JotApp.swift in Sources */,
@@ -297,6 +301,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.joshn.Jot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -319,6 +324,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.joshn.Jot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
